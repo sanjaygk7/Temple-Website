@@ -1,0 +1,84 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4a261;
+    padding: 10px 20px;
+  }
+  
+  .navbar .logo {
+    height: 100px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 100px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  
+  footer {
+    background-color: #264653;
+    color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .footer-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .footer-links a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  /* About Page styles */
+  .about-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 20px;
+  }
+  
+  .text-content {
+    width: 50%;
+  }
+  
+  .text-content h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .text-content p {
+    font-size: 1.2em;
+    line-height: 1.6;
+  }
+  
+  .image-content {
+    width: 40%;
+    text-align: center;
+  }
+  
+  .about-image {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  

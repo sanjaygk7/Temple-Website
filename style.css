@@ -1,0 +1,166 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4a261;
+  padding: 15px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo {
+  height: 60px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Carousel Styling */
+.carousel {
+  display: flex;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 10px;
+  gap: 20px;
+  border-radius: 20px;
+  background-color: #e9c46a;
+}
+
+.carousel-img {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Video and Text Section */
+.video-text-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  gap: 20px;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.text-container {
+  width: 100%;
+  max-width: 600px;
+  padding-left: 20px;
+}
+
+.text-container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #264653;
+}
+
+.text-container p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Upcoming Events Video */
+.upcoming-events-video-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.upcoming-events-video-container video {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+footer {
+  background-color: #264653;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-links a {
+  font-size: 1rem;
+  color: white;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #f4a261;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .carousel-img {
+      width: 90%;
+  }
+
+  .video-text-section {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .text-container {
+      padding-left: 0;
+  }
+
+  .navbar .logo {
+      height: 50px;
+  }
+}
