@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment - Kashi Math</title>
+    <title>Payment - Kudtheri Shree Mahamaya Temple</title>
     <style>
         body {
             display: flex;
@@ -12,28 +11,71 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #f3f4f7, #ff914d);
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .payment-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             text-align: center;
+            max-width: 400px;
+            width: 100%;
         }
+
         img {
-            width: 300px;
+            width: 250px;
             height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
+
         button {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: #007bff;
             color: white;
             border: none;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .icon {
+            font-size: 50px;
+            color: #ff6f1f;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body>
-    <h1>Scan to Pay</h1>
-    <img src="images/gpay.jpg" alt="Google Pay QR Code">
-    <button onclick="window.history.back()">Back to Seva</button>
+    <div class="payment-container">
+        <div class="icon">📱</div>
+        <h1>Scan to Pay</h1>
+        <p>Use your preferred UPI app to scan the QR code below</p>
+        <img src="images/gpay.jpg" alt="Google Pay QR Code">
+        <button onclick="window.location.href='utr-form.html'">I have completed the payment</button>
+    </div>
 </body>
-
 </html>

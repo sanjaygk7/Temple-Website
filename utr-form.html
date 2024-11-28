@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt - Kudtheri Shree Mahamaya Temple</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .receipt-container {
+            background-color: #fff;
+            width: 80%;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .receipt-header img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .receipt-details {
+            margin-top: 20px;
+        }
+
+        .receipt-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .receipt-details th,
+        .receipt-details td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .receipt-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        input[type="text"], select {
+            padding: 8px;
+            margin-top: 5px;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="receipt-container" id="receipt">
+        <div class="receipt-header">
+            <img src="images/logo.png" alt="Temple Logo">
+            <h2>Kudtheri Shree Mahamaya Temple</h2>
+            <p>📍 Shri Mahamaya Temple Road, Carstreet, Mangalore – 575 001, DK District</p>
+        </div>
+
+        <div class="receipt-details">
+            <table>
+                <tr>
+                    <th>Seva Name</th>
+                    <td>
+                        <select id="sevaName">
+                            <option value="select">Select</option>
+                            <option value="Archana">Archana</option>
+                            <option value="Abhisheka">Abhisheka</option>
+                            <option value="Special Pooja">Special Pooja</option>
+                            <option value="Tulabhara Seva">Tulabhara Seva</option>
+                            <option value="Ganapathi Homa">Ganapathi Homa</option>
+                            <option value="Durga Pooja">Durga Pooja</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Amount Paid</th>
+                    <td><input type="text" id="amountPaid" placeholder="Enter Amount Paid" required></td>
+                </tr>
+                <tr>
+                    <th>Transaction ID / UTR</th>
+                    <td><input type="text" id="utr" placeholder="Enter Transaction ID/UTR" required></td>
+                </tr>
+                <tr>
+                    <th>Payment Mode</th>
+                    <td>UPI</td>
+                </tr>
+                <tr>
+                    <th>Payment Status</th>
+                    <td><input type="text" id="paymentStatus" value="Success" disabled></td>
+                </tr>
+            </table>
+        </div>
+
+        <button id="downloadReceipt" onclick="downloadReceipt()">Download Receipt</button>
+
+        <div class="receipt-footer">
+            <p>For any queries, contact: 📧 kudtherishreemahamaya@gmail.com | 📞 0824 249 6819</p>
+            <p>Thank you!</p>
+        </div>
+    </div>
+
+    <script>
+        function downloadReceipt() {
+            const { jsPDF } = window.jspdf;
+
+            // Get the values entered by the user
+            const sevaName = document.getElementById('sevaName').value;
+            const amountPaid = document.getElementById('amountPaid').value;
+            const utr = document.getElementById('utr').value;
+            const paymentStatus = document.getElementById('paymentStatus').value;
+
+            if (!amountPaid || !utr) {
+                alert("Please fill in all the details.");
+                return;
+            }
+
+            // Create a new jsPDF instance
+            const doc = new jsPDF();
+
+            // Add title
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(22);
+            doc.text("Payment Receipt", 105, 20, { align: "center" });
+
+            // Add temple name and logo
+            doc.setFontSize(16);
+            doc.text("Kudtheri Shree Mahamaya Temple", 105, 30, { align: "center" });
+            doc.addImage("images/logo.png", "PNG", 90, 35, 30, 30); // Adjust logo size and position
+
+            // Add payment details
+            doc.setFontSize(12);
+            doc.text("Seva Name: " + sevaName, 20, 60);
+            doc.text("Amount Paid: ₹" + amountPaid, 20, 70);
+            doc.text("Transaction ID / UTR: " + utr, 20, 80);
+            doc.text("Payment Mode: UPI", 20, 90);
+            doc.text("Payment Status: " + paymentStatus, 20, 100);
+
+            // Add footer
+            doc.setFontSize(10);
+            doc.text("For any queries, contact: kudtherishreemahamaya@gmail.com | 0824 249 6819", 20, 130);
+
+            // Save the PDF to the local drive
+            doc.save("payment_receipt.pdf");
+        }
+    </script>
+</body>
+
+</html>
