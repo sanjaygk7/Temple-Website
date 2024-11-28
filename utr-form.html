@@ -4,86 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Receipt - Kudtheri Shree Mahamaya Temple</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Payment Confirmation - Kudtheri Shree Mahamaya Temple</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #f3f4f7, #ff914d);
             margin: 0;
-            padding: 0;
         }
 
-        .receipt-container {
+        form {
             background-color: #fff;
-            width: 80%;
-            margin: 30px auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .receipt-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .receipt-header img {
-            width: 100px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-
-        h2 {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        p {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .receipt-details {
-            margin-top: 20px;
-        }
-
-        .receipt-details table {
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
             width: 100%;
-            border-collapse: collapse;
-        }
-
-        .receipt-details th,
-        .receipt-details td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .receipt-footer {
-            margin-top: 30px;
             text-align: center;
-            font-size: 14px;
         }
 
-        input[type="text"], select {
-            padding: 8px;
-            margin-top: 5px;
+        input, button {
             width: 100%;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #007bff;
-            color: white;
+            padding: 12px;
+            margin: 10px 0;
             border: none;
             border-radius: 8px;
             font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -91,103 +47,134 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        .receipt {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 20px;
+            max-width: 600px;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        .receipt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ff914d;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .receipt-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        .receipt h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .receipt p {
+            margin: 5px 0;
+        }
+
+        .receipt-footer {
+            border-top: 2px solid #ff914d;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="receipt-container" id="receipt">
+    <form id="utr-form">
+        <h1>Payment Confirmation</h1>
+        <label for="donorName">Sevadhar Name</label>
+        <input type="text" id="sevadharName" placeholder="Your Name" required>
+
+        <label for="contactNumber">Contact Number</label>
+        <input type="text" id="contactNumber" placeholder="Your Contact Number" required>
+
+        <label for="utr">Enter UTR Number</label>
+        <input type="text" id="utr" placeholder="UTR Number" required>
+
+        <button type="submit">Generate Receipt</button>
+    </form>
+
+    <div class="receipt" id="receipt">
         <div class="receipt-header">
-            <img src="images/logo.png" alt="Temple Logo">
-            <h2>Kudtheri Shree Mahamaya Temple</h2>
-            <p>📍 Shri Mahamaya Temple Road, Carstreet, Mangalore – 575 001, DK District</p>
+            <img src="/images/logo.png" alt="Temple Logo" class="receipt-logo">
+            <div>
+                <h3>Kudtheri Shree Mahamaya Temple</h3>
+                <p>Shri Mahamaya Temple Road, Carstreet, Mangalore – 575 001</p>
+                <p>📧 kudtherishreemahamaya@gmail.com | 📞 0824 249 6819</p>
+            </div>
         </div>
 
-        <div class="receipt-details">
-            <table>
-                <tr>
-                    <th>Seva Name</th>
-                    <td>
-                        <select id="sevaName">
-                            <option value="select">Select</option>
-                            <option value="Archana">Archana</option>
-                            <option value="Abhisheka">Abhisheka</option>
-                            <option value="Special Pooja">Special Pooja</option>
-                            <option value="Tulabhara Seva">Tulabhara Seva</option>
-                            <option value="Ganapathi Homa">Ganapathi Homa</option>
-                            <option value="Durga Pooja">Durga Pooja</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Amount Paid</th>
-                    <td><input type="text" id="amountPaid" placeholder="Enter Amount Paid" required></td>
-                </tr>
-                <tr>
-                    <th>Transaction ID / UTR</th>
-                    <td><input type="text" id="utr" placeholder="Enter Transaction ID/UTR" required></td>
-                </tr>
-                <tr>
-                    <th>Payment Mode</th>
-                    <td>UPI</td>
-                </tr>
-                <tr>
-                    <th>Payment Status</th>
-                    <td><input type="text" id="paymentStatus" value="Success" disabled></td>
-                </tr>
-            </table>
-        </div>
-
-        <button id="downloadReceipt" onclick="downloadReceipt()">Download Receipt</button>
+        <h2>Payment Receipt</h2>
+        <p><strong>Sevadhar Name:</strong> <span id="receipt-sevadharName"></span></p>
+        <p><strong>Contact Number:</strong> <span id="receipt-contactNumber"></span></p>
+        <p><strong>Seva:</strong> <span id="receipt-seva"></span></p>
+        <p><strong>Amount:</strong> ₹<span id="receipt-amount"></span></p>
+        <p><strong>UTR Number:</strong> <span id="receipt-utr"></span></p>
+        <p><strong>Date:</strong> <span id="receipt-date"></span></p>
 
         <div class="receipt-footer">
-            <p>For any queries, contact: 📧 kudtherishreemahamaya@gmail.com | 📞 0824 249 6819</p>
-            <p>Thank you!</p>
+            <p>Thank you for your generous contribution.</p>
+            <p>May the blessings of Kudtheri Shree Mahamaya be with you and your family.</p>
         </div>
     </div>
 
     <script>
-        function downloadReceipt() {
-            const { jsPDF } = window.jspdf;
+        document.getElementById('utr-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-            // Get the values entered by the user
-            const sevaName = document.getElementById('sevaName').value;
-            const amountPaid = document.getElementById('amountPaid').value;
-            const utr = document.getElementById('utr').value;
-            const paymentStatus = document.getElementById('paymentStatus').value;
+            const sevadharName = document.getElementById('sevadharName').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const utrNumber = document.getElementById('utr').value;
+            const sevaName = 'Annadan Seva'; // Example, can be dynamic
+            const amount = 500; // Example, can be dynamic
+            const currentDate = new Date().toLocaleDateString();
 
-            if (!amountPaid || !utr) {
-                alert("Please fill in all the details.");
-                return;
-            }
+            // Store data to backend
+            await fetch('http://localhost:3000/api/payments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sevadharName,
+                    contactNumber,
+                    utr: utrNumber,
+                    seva: sevaName,
+                    amount
+                })
+            });
 
-            // Create a new jsPDF instance
-            const doc = new jsPDF();
+            // Populate receipt
+            document.getElementById('receipt-sevadharName').innerText = sevadharName;
+            document.getElementById('receipt-contactNumber').innerText = contactNumber;
+            document.getElementById('receipt-seva').innerText = sevaName;
+            document.getElementById('receipt-amount').innerText = amount;
+            document.getElementById('receipt-utr').innerText = utrNumber;
+            document.getElementById('receipt-date').innerText = currentDate;
+            document.getElementById('receipt').style.display = 'block';
+            document.getElementById('utr-form').style.display = 'none';
 
-            // Add title
-            doc.setFont("helvetica", "bold");
-            doc.setFontSize(22);
-            doc.text("Payment Receipt", 105, 20, { align: "center" });
-
-            // Add temple name and logo
-            doc.setFontSize(16);
-            doc.text("Kudtheri Shree Mahamaya Temple", 105, 30, { align: "center" });
-            doc.addImage("images/logo.png", "PNG", 90, 35, 30, 30); // Adjust logo size and position
-
-            // Add payment details
-            doc.setFontSize(12);
-            doc.text("Seva Name: " + sevaName, 20, 60);
-            doc.text("Amount Paid: ₹" + amountPaid, 20, 70);
-            doc.text("Transaction ID / UTR: " + utr, 20, 80);
-            doc.text("Payment Mode: UPI", 20, 90);
-            doc.text("Payment Status: " + paymentStatus, 20, 100);
-
-            // Add footer
-            doc.setFontSize(10);
-            doc.text("For any queries, contact: kudtherishreemahamaya@gmail.com | 0824 249 6819", 20, 130);
-
-            // Save the PDF to the local drive
-            doc.save("payment_receipt.pdf");
-        }
+            // Generate PDF
+            html2pdf().from(document.getElementById('receipt')).set({
+                margin: [10, 10, 10, 10],
+                filename: `Payment_Receipt_${utrNumber}.pdf`,
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save();
+        });
     </script>
 </body>
 

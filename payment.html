@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +76,20 @@
         <h1>Scan to Pay</h1>
         <p>Use your preferred UPI app to scan the QR code below</p>
         <img src="images/gpay.jpg" alt="Google Pay QR Code">
-        <button onclick="window.location.href='utr-form.html'">I have completed the payment</button>
+        <button id="confirmPayment">I have completed the payment</button>
     </div>
+
+    <script>
+        // Retrieve Seva Name and Amount from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const sevaName = urlParams.get('sevaName') || 'N/A';
+        const amount = urlParams.get('amount') || 'N/A';
+
+        // Redirect to the UTR form with Seva details
+        document.getElementById('confirmPayment').addEventListener('click', function () {
+            window.location.href = `utr-form.html?sevaName=${encodeURIComponent(sevaName)}&amount=${encodeURIComponent(amount)}`;
+        });
+    </script>
 </body>
+
 </html>
