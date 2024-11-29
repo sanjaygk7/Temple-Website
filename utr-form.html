@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -29,8 +29,7 @@
         }
 
         input,
-        button,
-        select {
+        button {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -97,18 +96,11 @@
 <body>
     <form id="utr-form">
         <h1>Payment Confirmation</h1>
-        <label for="sevadharName">Sevadhar Name</label>
+        <label for="donorName">Sevadhar Name</label>
         <input type="text" id="sevadharName" placeholder="Your Name" required>
 
         <label for="contactNumber">Contact Number</label>
         <input type="text" id="contactNumber" placeholder="Your Contact Number" required>
-
-        <label for="seva">Select Seva</label>
-        <select id="seva" required>
-            <option value="Annadan Seva">Annadan Seva</option>
-            <option value="Shri Mahamaya Pooja">Shri Mahamaya Pooja</option>
-            <option value="Temple Maintenance">Temple Maintenance</option>
-        </select>
 
         <label for="utr">Enter UTR Number</label>
         <input type="text" id="utr" placeholder="UTR Number" required>
@@ -147,8 +139,175 @@
             const sevadharName = document.getElementById('sevadharName').value;
             const contactNumber = document.getElementById('contactNumber').value;
             const utrNumber = document.getElementById('utr').value;
-            const sevaName = document.getElementById('seva').value; // Get selected seva
-            const amount = sevaName === 'Annadan Seva' ? 500 : (sevaName === 'Shri Mahamaya Pooja' ? 1000 : 1500); // Example amounts based on seva
+            const sevaName = 'Annadan Seva'; // Example, can be dynamic
+            const amount = 500; // Example, can be dynamic
+            const currentDate = new Date().toLocaleDateString();
+
+            // Store data to backend
+            await fetch('https://sop-kj7i.onrender.com/api/payments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sevadharName,
+                    contactNumber,
+                    utr: utrNumber,
+                    seva: sevaName,
+                    amount
+                })
+            });
+
+            // Populate receipt
+            document.getElementById('receipt-sevadharName').innerText = sevadharName;
+            document.getElementById('receipt-contactNumber').innerText = contactNumber;
+            document.getElementById('receipt-seva').innerText = sevaName;
+            document.getElementById('receipt-amount').innerText = amount;
+            document.getElementById('receipt-utr').innerText = utrNumber;
+            document.getElementById('receipt-date').innerText = currentDate;
+            document.getElementById('receipt').style.display = 'block';
+            document.getElementById('utr-form').style.display = 'none';
+
+            // Generate PDF
+            html2pdf().from(document.getElementById('receipt')).set({
+                margin: [10, 10, 10, 10],
+                filename: `Payment_Receipt_${utrNumber}.pdf`,
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save();
+        });
+
+    </script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation - Kudtheri Shree Mahamaya Temple</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #f3f4f7, #ff914d);
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .receipt {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 20px;
+            max-width: 600px;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        .receipt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ff914d;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .receipt-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        .receipt h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .receipt p {
+            margin: 5px 0;
+        }
+
+        .receipt-footer {
+            border-top: 2px solid #ff914d;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="utr-form">
+        <h1>Payment Confirmation</h1>
+        <label for="donorName">Sevadhar Name</label>
+        <input type="text" id="sevadharName" placeholder="Your Name" required>
+
+        <label for="contactNumber">Contact Number</label>
+        <input type="text" id="contactNumber" placeholder="Your Contact Number" required>
+
+        <label for="utr">Enter UTR Number</label>
+        <input type="text" id="utr" placeholder="UTR Number" required>
+
+        <button type="submit">Generate Receipt</button>
+    </form>
+
+    <div class="receipt" id="receipt">
+        <p>Thank you for your generous contribution.</p>
+            <p>May the blessings of Kudtheri Shree Mahamaya be with you and your family.</p>
+    </div>
+
+    <script>
+        // Fetching query parameters from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sevaName = urlParams.get('sevaName');
+        const amount = urlParams.get('amount');
+
+        document.getElementById('utr-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const sevadharName = document.getElementById('sevadharName').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const utrNumber = document.getElementById('utr').value;
             const currentDate = new Date().toLocaleDateString();
 
             // Store data to backend
