@@ -29,7 +29,8 @@
         }
 
         input,
-        button {
+        button,
+        select {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -96,11 +97,18 @@
 <body>
     <form id="utr-form">
         <h1>Payment Confirmation</h1>
-        <label for="donorName">Sevadhar Name</label>
+        <label for="sevadharName">Sevadhar Name</label>
         <input type="text" id="sevadharName" placeholder="Your Name" required>
 
         <label for="contactNumber">Contact Number</label>
         <input type="text" id="contactNumber" placeholder="Your Contact Number" required>
+
+        <label for="seva">Select Seva</label>
+        <select id="seva" required>
+            <option value="Annadan Seva">Annadan Seva</option>
+            <option value="Shri Mahamaya Pooja">Shri Mahamaya Pooja</option>
+            <option value="Temple Maintenance">Temple Maintenance</option>
+        </select>
 
         <label for="utr">Enter UTR Number</label>
         <input type="text" id="utr" placeholder="UTR Number" required>
@@ -139,8 +147,8 @@
             const sevadharName = document.getElementById('sevadharName').value;
             const contactNumber = document.getElementById('contactNumber').value;
             const utrNumber = document.getElementById('utr').value;
-            const sevaName = 'Annadan Seva'; // Example, can be dynamic
-            const amount = 500; // Example, can be dynamic
+            const sevaName = document.getElementById('seva').value; // Get selected seva
+            const amount = sevaName === 'Annadan Seva' ? 500 : (sevaName === 'Shri Mahamaya Pooja' ? 1000 : 1500); // Example amounts based on seva
             const currentDate = new Date().toLocaleDateString();
 
             // Store data to backend
@@ -176,7 +184,6 @@
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             }).save();
         });
-
     </script>
 </body>
 
