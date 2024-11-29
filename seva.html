@@ -4,104 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Confirmation - Kudtheri Shree Mahamaya Temple</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-    <style>
-        /* Your existing styles */
-    </style>
+    <title>Seva - Kudtheri Shree Mahamaya Temple</title>
+    <link rel="stylesheet" href="seva.css">
 </head>
 
 <body>
-    <form id="utr-form">
-        <h1>Payment Confirmation</h1>
-        <label for="donorName">Sevadhar Name</label>
-        <input type="text" id="sevadharName" placeholder="Your Name" required>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img src="/images/logo.png" alt="Temple Logo" class="logo">
+        <h3>Kudtheri Shree Mahamaya Temple</h3>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="seva.html">Seva</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
 
-        <label for="contactNumber">Contact Number</label>
-        <input type="text" id="contactNumber" placeholder="Your Contact Number" required>
+    <!-- Seva Section -->
+    <main>
+        <h1>Available Sevas</h1>
+        <table class="seva-table">
+            <tr>
+                <th>Seva</th>
+                <th>Amount (₹)</th>
+                <th>Pay Now</th>
+            </tr>
+            <tr>
+                <td>Archana</td>
+                <td>₹100</td>
+                <td><a href="payment.html?sevaName=Archana&amount=100"><button>Pay Now</button></a></td>
+            </tr>
+            <tr>
+                <td>Abhisheka</td>
+                <td>₹500</td>
+                <td><a href="payment.html?sevaName=Abhisheka&amount=500"><button>Pay Now</button></a></td>
+            </tr>
+            <tr>
+                <td>Special Pooja</td>
+                <td>₹1000</td>
+                <td><a href="payment.html?sevaName=Special Pooja&amount=1000"><button>Pay Now</button></a></td>
+            </tr>
+            <tr>
+                <td>Tulabhara Seva</td>
+                <td>₹2500</td>
+                <td><a href="payment.html?sevaName=Tulabhara Seva&amount=2500"><button>Pay Now</button></a></td>
+            </tr>
+            <tr>
+                <td>Ganapathi Homa</td>
+                <td>₹1500</td>
+                <td><a href="payment.html?sevaName=Ganapathi Homa&amount=1500"><button>Pay Now</button></a></td>
+            </tr>
+            <tr>
+                <td>Durga Pooja</td>
+                <td>₹3000</td>
+                <td><a href="payment.html?sevaName=Durga Pooja&amount=3000"><button>Pay Now</button></a></td>
+            </tr>
+        </table>
+    </main>
 
-        <label for="utr">Enter UTR Number</label>
-        <input type="text" id="utr" placeholder="UTR Number" required>
-
-        <button type="submit">Generate Receipt</button>
-    </form>
-
-    <div class="receipt" id="receipt">
-        <div class="receipt-header">
-            <img src="/images/logo.png" alt="Temple Logo" class="receipt-logo">
-            <h2>Kudtheri Shree Mahamaya Temple</h2>
-        </div>
-        <p><strong>Thank you for your generous contribution.</strong></p>
-        <p>May the blessings of Kudtheri Shree Mahamaya be with you and your family.</p>
-
-        <p><strong>Sevadhar Name:</strong> <span id="receipt-sevadharName"></span></p>
-        <p><strong>Contact Number:</strong> <span id="receipt-contactNumber"></span></p>
-        <p><strong>Seva:</strong> <span id="receipt-seva"></span></p>
-        <p><strong>Amount (₹):</strong> <span id="receipt-amount"></span></p>
-        <p><strong>UTR Number:</strong> <span id="receipt-utr"></span></p>
-        <p><strong>Date:</strong> <span id="receipt-date"></span></p>
-
-        <div class="receipt-footer">
-            <button onclick="generatePDF()">Download PDF</button>
-        </div>
-    </div>
-
-    <script>
-        // Fetching query parameters from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const sevaName = urlParams.get('sevaName');
-        const amount = urlParams.get('amount');
-
-        // Display sevaName and amount in the form and receipt
-        document.getElementById('receipt-seva').innerText = sevaName;
-        document.getElementById('receipt-amount').innerText = amount;
-        document.getElementById('sevadharName').value = sevaName; // Optionally, you can prefill the sevaName in the form
-
-        // Handle form submission
-        document.getElementById('utr-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const sevadharName = document.getElementById('sevadharName').value;
-            const contactNumber = document.getElementById('contactNumber').value;
-            const utrNumber = document.getElementById('utr').value;
-            const currentDate = new Date().toLocaleDateString();
-
-            // Store data to backend
-            await fetch('https://sop-kj7i.onrender.com/api/payments', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    sevadharName,
-                    contactNumber,
-                    utr: utrNumber,
-                    seva: sevaName,
-                    amount
-                })
-            });
-
-            // Populate the receipt with entered data
-            document.getElementById('receipt-sevadharName').innerText = sevadharName;
-            document.getElementById('receipt-contactNumber').innerText = contactNumber;
-            document.getElementById('receipt-utr').innerText = utrNumber;
-            document.getElementById('receipt-date').innerText = currentDate;
-
-            document.getElementById('receipt').style.display = 'block';
-            document.getElementById('utr-form').style.display = 'none';
-        });
-
-        // Function to generate PDF
-        function generatePDF() {
-            const element = document.getElementById('receipt');
-            html2pdf().from(element).set({
-                margin: [10, 10, 10, 10],
-                filename: `Payment_Receipt_${document.getElementById('utr').value}.pdf`,
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            }).save();
-        }
-    </script>
+    <footer>
+        <p>📍Shri Mahamaya Temple Road, Carstreet, Mangalore – 575 001, DK District</p>
+        <p>📧 kudtherishreemahamaya@gmail.com | 📞 0824 249 6819</p>
+    </footer>
 </body>
 
 </html>
