@@ -39,4 +39,6 @@ app.post('/api/payments', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000')); // Start the server
+// Use Render's dynamic port and listen on all interfaces
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on http://localhost:${PORT}`));
