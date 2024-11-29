@@ -28,7 +28,8 @@
             text-align: center;
         }
 
-        input, button {
+        input,
+        button {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -143,7 +144,7 @@
             const currentDate = new Date().toLocaleDateString();
 
             // Store data to backend
-            await fetch('http://localhost:3000/api/payments', {
+            await fetch('https://sop-kj7i.onrender.com/api/payments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -175,6 +176,7 @@
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             }).save();
         });
+
     </script>
 </body>
 
