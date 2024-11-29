@@ -221,6 +221,10 @@
             font-size: 16px;
         }
 
+        input[readonly] {
+            background-color: #f3f4f7;
+        }
+
         button {
             background-color: #007bff;
             color: white;
@@ -279,7 +283,11 @@
 <body>
     <form id="utr-form">
         <h1>Payment Confirmation</h1>
-        <label for="donorName">Sevadhar Name</label>
+
+        <label for="sevaName">Seva Name</label>
+        <input type="text" id="sevaName" readonly>
+
+        <label for="sevadharName">Sevadhar Name</label>
         <input type="text" id="sevadharName" placeholder="Your Name" required>
 
         <label for="contactNumber">Contact Number</label>
@@ -312,15 +320,15 @@
     </div>
 
     <script>
-        // Fetching query parameters from the URL
+        // Fetch query parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const sevaName = urlParams.get('sevaName');
-        const amount = urlParams.get('amount'); // Assuming you also pass amount in URL, if not you can hardcode or update as needed.
+        const amount = urlParams.get('amount');
 
-        // Display sevaName in the form and receipt
+        // Display seva name and amount in the form and receipt
+        document.getElementById('sevaName').value = sevaName; // Show in the input field
         document.getElementById('receipt-seva').innerText = sevaName;
-        // Populate the seva name in the form, if needed
-        document.getElementById('sevadharName').value = sevaName;
+        document.getElementById('receipt-amount').innerText = amount;
 
         document.getElementById('utr-form').addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -348,9 +356,10 @@
             // Populate receipt fields
             document.getElementById('receipt-sevadharName').innerText = sevadharName;
             document.getElementById('receipt-contactNumber').innerText = contactNumber;
-            document.getElementById('receipt-amount').innerText = amount;
             document.getElementById('receipt-utr').innerText = utrNumber;
             document.getElementById('receipt-date').innerText = currentDate;
+
+            // Show receipt and hide form
             document.getElementById('receipt').style.display = 'block';
             document.getElementById('utr-form').style.display = 'none';
         });
@@ -369,3 +378,4 @@
 </body>
 
 </html>
+
