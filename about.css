@@ -1,11 +1,9 @@
-/* General styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -14,77 +12,63 @@ body {
     padding: 10px 20px;
     color: white;
 }
-
 .logo {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
 }
-
 .nav-links {
     display: flex;margin-left: auto;
     list-style: none;
     
 }
-
 .nav-links li a {
     text-decoration: none;
     color: white;
     padding: 10px 15px;
 }
-
 h1 {
     text-align: center;
     color: #ff914d;
 }
-  
   footer {
     background-color: #5c0202;
     color: white;
     text-align: center;
     padding: 10px;
   }
-  
   .footer-links {
     list-style: none;
     display: flex;
     justify-content: center;
     gap: 15px;
   }
-  
   .footer-links a {
     text-decoration: none;
     color: white;
   }
-  
-  /* About Page styles */
   .about-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 40px 20px;
   }
-  
   .text-content {
     width: 50%;
   }
-  
   .text-content h1 {
     font-size: 2em;
     margin-bottom: 20px;
   }
-  
   .text-content p {
     font-size: 1.2em;
     line-height: 1.6;
   }
-  
   .image-content {
     width: 40%;
     text-align: center;
   }
-  
   .about-image {
     max-width: 100%;
     border-radius: 10px;
